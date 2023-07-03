@@ -20,6 +20,7 @@ On dag the folder is /home/terchris/urbalurba-containers on mac it is /Users/tec
 
 In urbalurba_containers clone the repository
 Copy the repository using:
+
 ```bash
 git clone https://github.com/terchris/urbalurba-logging.git urbalurba-logging
 ```

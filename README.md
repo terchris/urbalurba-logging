@@ -22,3 +22,26 @@ Copy the repository using:
 ```bash
 git clone https://github.com/terchris/urbalurba-logging.git urbalurba-logging
 ```
+
+to start it do:
+
+```bash
+cd urbalurba-logging
+docker-compose up -d
+```
+
+on the ubuntu you need to do sudo docker-compose up -d
+
+loki logging is done to the volume named urbalurba-logging_loki-data-volume
+
+To see logs go to http://localhost:3000
+user: admin
+password: admin
+
+In grafana click on the burger-menu in upper left. Select Explore. Then select loki as data source.
+
+To see log for a container. Click the Label browser button. You shouild now see the containers that are running. Select the container you want to see logs for.
+
+## working with the logs
+
+dockument this as we go

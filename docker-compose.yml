@@ -1,18 +1,12 @@
 version: "3"
 
-
 services:
   loki:
     container_name: loki
     image: grafana/loki:latest
     ports:
       - "3100:3100"
-    volumes:
-      - loki-data-volume:/loki
-      - ./loki-local-config.yaml:/etc/loki/local-config.yaml:ro
     command: -config.file=/etc/loki/local-config.yaml
-
-
 
   grafana:
     container_name: grafana
@@ -36,7 +30,6 @@ services:
     depends_on:
       - loki
 
-
   promtail:
     container_name: promtail
     image: grafana/promtail:2.8.0
@@ -45,10 +38,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command: -config.file=/etc/promtail/config.yaml
 
-
 networks:
   default:
     name: urbalurba-network
-
-volumes:
-  loki-data-volume:

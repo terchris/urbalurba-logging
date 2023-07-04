@@ -1,12 +1,16 @@
 version: "3"
 
 services:
+  
   loki:
     container_name: loki
     image: grafana/loki:latest
     ports:
       - "3100:3100"
+    volumes:
+      - loki-data-volume:/loki
     command: -config.file=/etc/loki/local-config.yaml
+
 
   grafana:
     container_name: grafana
@@ -41,3 +45,6 @@ services:
 networks:
   default:
     name: urbalurba-network
+
+volumes:
+  loki-data-volume:

@@ -1,6 +1,11 @@
-# urbalurba-logging
+# urbalurba-manage
 
-For logging in urbalurba.
+For handling management and logging in urbalurba.
+
+
+
+
+--------- old doc for just logging ------
 All code uses winston for logging. winston is set up to log to console.
 
 All systems are running in docker dontainers.

@@ -1,6 +1,21 @@
 # urbalurba-manage
 
 For handling management and logging in urbalurba.
+urbalurba-manage is based on the template named Swarm monitoring that comes with portainer.
+The Swarm monitoring  let you see cpu and stuff but not logging from the containers.
+I've added loki to the stack so that logs from the containers are stored in loki and can be viewed in grafana.
+
+## installation
+In order to get logging working in a swarm you must first install the loki plugin for logging on each node in the swarm.  [read more about loki plugin](https://grafana.com/docs/loki/latest/clients/docker-driver/)
+- sudo docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
+- sudo docker plugin ls
+
+Docker must also be running in swarm mode. To do this run:
+- sudo docker swarm init
+
+
+Grafana login
+The default grafana login is admin/admin. You can change this by setting the environment variables GF_SECURITY_ADMIN_USER and GF_SECURITY_ADMIN_PASSWORD.
 
 
 

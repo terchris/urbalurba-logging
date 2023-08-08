@@ -15,12 +15,12 @@ Docker must also be running in swarm mode. To do this run:
 
 
 Grafana login
-The default grafana login is admin/admin. You can change this by setting the environment variables GF_SECURITY_ADMIN_USER and GF_SECURITY_ADMIN_PASSWORD.
+The default grafana login is admin/admin. You can change this by setting the environment variables GF_SECURITY_ADMIN_USER and GF_SECURITY_ADMIN_PASSWORD.(not working)
 
 
 
 
---------- old doc for just logging ------
+--------- old doc for just logging ------ DELETE FROM HERE
 All code uses winston for logging. winston is set up to log to console.
 
 All systems are running in docker dontainers.

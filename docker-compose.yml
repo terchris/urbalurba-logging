@@ -3,9 +3,14 @@ version: "3.8"
 services:
   grafana:
     image: ghcr.io/terchris/urbalurba-manage:latest
+    environment:
+      - GRAFANA_PORT=${GRAFANA_PORT:-3000}
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}      
+      - GF_USERS_ALLOW_SIGN_UP=false    
     ports:
       - target: 3000
-        published: 3000
+        published: ${GRAFANA_PORT}
         protocol: tcp
         mode: ingress
     deploy:
@@ -20,10 +25,6 @@ services:
       - type: volume
         source: grafana-data
         target: /var/lib/grafana
-    environment:
-      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}      
-      - GF_USERS_ALLOW_SIGN_UP=false
     networks:
       - urbalurba-network    
 
@@ -116,9 +117,11 @@ services:
   loki:
     image: grafana/loki:latest
     command: -config.file=/etc/loki/local-config.yaml
+    environment:
+      - LOKI_PORT=${LOKI_PORT:-3100}    
     ports:
       - target: 3100
-        published: 3100
+        published: ${LOKI_PORT}
         protocol: tcp
         mode: ingress
     deploy:
@@ -136,6 +139,33 @@ services:
     networks:
       - urbalurba-network
 
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOST=${REDIS_HOST:-redis}
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-???}
+      - HTTP_PASSWORD=${REDIS_COMMANDER_PASSWORD:-admin}
+      - HTTP_USER=${REDIS_COMMANDER_USER:-admin}
+      - REDIS_COMMANDER_PORT=${REDIS_COMMANDER_PORT:-8082}
+    ports:
+      - '${REDIS_COMMANDER_PORT}:8081'      
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == manager
+          - node.labels.monitoring == true
+    networks:
+      - urbalurba-network          
+      
+
+
+
+
+
 volumes:
   grafana-data:
   prometheus-data:
@@ -143,4 +173,4 @@ volumes:
 
 networks:
   urbalurba-network:
-    driver: overlay
+    external: true
